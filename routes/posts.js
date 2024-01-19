@@ -56,4 +56,37 @@ router
     else next();
   });
 
+  router
+  // GET /api/users/:id/posts
+
+  .route("/api/users/:id/posts")
+  //  Retrieves all posts by a user with the specified id. 
+  .get((req, res, next) => {
+    const userId = parseInt(req.params.id);
+    const userPosts = posts.filter((post) => post.userId === userId);
+
+    if (userPosts.length > 0) {
+      res.json(userPosts);
+    } else {
+      next();
+    }
+  });
+
+  router
+  // GET /api/posts?userId=<VALUE>
+
+  .route("/api/posts")
+  .get((req, res) => {
+    const userId = parseInt(req.query.userId);
+  
+    if (isNaN(userId)) {
+      // If userId is not a valid number, respond with an error
+      return res.status(400).json({ error: 'Invalid userId parameter' });
+    }
+    const userPosts = posts.filter((post) => post.userId === userId);
+  
+    res.json(userPosts);
+  });
+
+
 module.exports = router;

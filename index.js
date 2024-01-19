@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 
 const users = require("./routes/users");
 const posts = require("./routes/posts");
+const comment = require("./route/comments")
 
 const error = require("./utilities/error");
 
