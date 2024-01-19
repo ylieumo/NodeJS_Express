@@ -3,6 +3,39 @@ const router = express.Router();
 
 const posts = require("../data/comments");
 
+router 
+.route("/comments")
+// GET /comments
+.get((req, res) => {
+    // Respond with all comments
+    res.json(comments);
+  });
+.post((req, res) => {
+    const { userId, postId, body } = req.body;
+  
+    // Validate required fields
+    if (!userId || !postId || !body) {
+      return res.status(400).json({ error: 'userId, postId, and body are required fields' });
+    }
+  
+    // Generate a unique identifier for the new comment
+    const newCommentId = comments.length + 1;
+  
+    // Create a new comment object
+    const newComment = {
+      id: newCommentId,
+      userId: userId,
+      postId: postId,
+      body: body,
+    };
+  
+    // Add the new comment to the comments array
+    comments.push(newComment);
+  
+    // Respond with the newly created comment
+    res.status(201).json(newComment);
+  });
+
 
 
 
